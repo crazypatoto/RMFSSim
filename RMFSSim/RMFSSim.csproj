@@ -55,10 +55,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="RMFS\Maps\Location.cs" />
+    <Compile Include="RMFS\Maps\Map.cs" />
+    <Compile Include="RMFS\Maps\MapEdge.cs" />
+    <Compile Include="RMFS\Maps\MapNode.cs" />
+    <Compile Include="RMFS\Pods\Pod.cs" />
+    <Compile Include="RMFS\RMFSCore.cs" />
+    <Compile Include="RMFS\Visualizations\RMFSVisualization.cs" />
+    <Compile Include="Windows\NewMapWindow.xaml.cs">
+      <DependentUpon>NewMapWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="RMFS\AGVs\AGV.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -67,6 +78,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Windows\NewMapWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -95,14 +110,48 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\content-save.png" />
+    <Resource Include="Icons\content-save.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\file.png" />
-    <Resource Include="icons\folder-open.png" />
+    <Resource Include="Icons\file.png" />
+    <Resource Include="Icons\folder-open.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\content-save-move.png" />
+    <Resource Include="Icons\content-save-move.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RMFS\AGVs\Tasks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\shipping-pallet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\robot-mower.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\pause.png" />
+    <Resource Include="Icons\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\clock-minus.png" />
+    <Resource Include="Icons\clock-plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\ev-station.png" />
+    <Resource Include="Icons\wall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\alpha-p-box.png" />
+    <Resource Include="Icons\alpha-r-box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\border-none-variant.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\alpha-s-box.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

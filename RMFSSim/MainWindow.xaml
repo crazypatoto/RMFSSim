@@ -9,7 +9,7 @@
     <Window.Resources>
         <Style TargetType="MenuItem">
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontFamily" Value="Gadugi"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
         </Style>
     </Window.Resources>
     <Grid Background="#FFF0F0F0">
@@ -25,13 +25,14 @@
 
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
             <MenuItem Header="File">
-                <MenuItem Header="New Map"/>
-                <MenuItem Header="Open Map"/>
+                <MenuItem Header="New Map" Click="btn_newMap_Click"/>
+                <MenuItem Header="Open Map" Click="btn_openMap_Click"/>
                 <Separator/>
-                <MenuItem Header="Save Map"/>
-                <MenuItem Header="Save Map As"/>
+                <MenuItem Header="Save Map" Click="btn_saveMap_Click"/>
+                <MenuItem Header="Save Map As" Click="btn_saveMapAs_Click"/>
             </MenuItem>
-            <MenuItem Header="Edit" />
+            <MenuItem Header="Edit"/>
+            <MenuItem Header="View"/>
             <MenuItem Header="Simulation" />
             <MenuItem Header="Settings" />
             <MenuItem Header="About" />
@@ -40,27 +41,82 @@
         <ToolBarTray Grid.Row="1" Grid.ColumnSpan="2" Background="#FFF0F0F0">
             <ToolBarTray.Resources>
                 <Style TargetType="Image">
-                    <Setter Property="Height" Value="20"></Setter>
+                   <Setter Property="Height" Value="20"></Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.4"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                <Style x:Key="RoundButtonStyle" TargetType="Button">
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="8"/>
+                        </Style>
+                    </Style.Resources>
                 </Style>
             </ToolBarTray.Resources>
-            <ToolBar Band="1" BandIndex="1" Background="#FFF0F0F0">
-                <Button>
-                    <Image Source="/icons/file.png"/>
+            <ToolBar Band="0" BandIndex="0" Background="#FFF0F0F0">
+                <Button x:Name="btn_newMap" ToolTip="New Map" Click="btn_newMap_Click">
+                    <Image Source="/Icons/file.png"/>
                 </Button>
-                <Button>
-                    <Image Source="/icons/folder-open.png"/>
+                <Button x:Name="btn_openMap" ToolTip="Open Existing Map" Click="btn_openMap_Click">
+                    <Image Source="/Icons/folder-open.png"/>
                 </Button>
-                <Button>
-                    <Image Source="/icons/content-save.png"/>
+                <Button x:Name="btn_saveMap" ToolTip="Save Current Map" Click="btn_saveMap_Click">
+                    <Image Source="/Icons/content-save.png"/>
                 </Button>
-                <Button>
-                    <Image Source="/icons/content-save-move.png"/>
+                <Button x:Name="btn_saveMapAs" ToolTip="Save Current Map As" Click="btn_saveMapAs_Click">
+                    <Image Source="/Icons/content-save-move.png"/>
                 </Button>
             </ToolBar>
+            <ToolBar Band="0" BandIndex="1" x:Name="toolbar_mapEdit" Background="#FFF0F0F0">
+                <Button x:Name="btn_addNone" ToolTip="Add None Node" Click="btn_addNone_Click">
+                    <Image Source="/Icons/border-none-variant.png"/>
+                </Button>
+                <Button x:Name="btn_addStorage" ToolTip="Add Storage" Click="btn_addStorage_Click">
+                    <Image Source="/Icons/alpha-s-box.png"/>
+                </Button>
+                <Button x:Name="btn_addPickStation" ToolTip="Add Pick Station" Click="btn_addPickStation_Click">
+                    <Image Source="/Icons/alpha-p-box.png"/>
+                </Button>
+                <Button x:Name="btn_addReplenishmentStation" ToolTip="Add Replenishment Station" Click="btn_addReplenishmentStation_Click">
+                    <Image Source="/Icons/alpha-r-box.png"/>
+                </Button>
+                <Button x:Name="btn_addChargeStation" ToolTip="Add Charge Station" Click="btn_addChargeStation_Click">
+                    <Image Source="/Icons/ev-station.png"/>
+                </Button>
+                <Button x:Name="btn_addAGV" ToolTip="Add AGV" Click="btn_addAGV_Click">
+                    <Image Source="/Icons/robot-mower.png"/>
+                </Button>
+                <Button x:Name="btn_addPod" ToolTip="Add Pod" Click="btn_addPod_Click">
+                    <Image Source="/Icons/shipping-pallet.png"/>
+                </Button>
+            </ToolBar>
+            <ToolBar Band="0" BandIndex="3"  x:Name="toolbar_simulationControl" Background="#FFF0F0F0">
+                <Button x:Name="btn_startSim" ToolTip="Start Simulation" Click="btn_startSim_Click" Style="{StaticResource RoundButtonStyle}">
+                    <Image Source="/Icons/play.png"/>
+                </Button>
+                <Button x:Name="btn_pauseSim" ToolTip="Pause Simulation" Click="btn_pauseSim_Click" Style="{StaticResource RoundButtonStyle}">
+                    <Image Source="/Icons/pause.png"/>
+                </Button>
+                <Button x:Name="btn_stopSim" ToolTip="Stop Simulation" Click="btn_stopSim_Click" Style="{StaticResource RoundButtonStyle}">
+                    <Image Source="/Icons/stop.png"/>
+                </Button>
+                <Button x:Name="btn_slowDown" ToolTip="Slow Down" Click="btn_slowDown_Click">
+                    <Image Source="/Icons/clock-minus.png"/>
+                </Button>
+                <Button x:Name="btn_speedUp" ToolTip="Speed Up" Click="btn_speedUp_Click">
+                    <Image Source="/Icons/clock-plus.png"/>
+                </Button>
+            </ToolBar>
+
         </ToolBarTray>
 
-        <Canvas Name="canvas_mapViewer" Grid.Row="2" Grid.Column="0" Background="White" 
+        <Canvas Grid.Row="2" Grid.Column="0" Panel.ZIndex="-1" x:Name="canvas_mapViewer" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                 MouseDown="canvas_mapViewer_MouseDown" MouseUp="canvas_mapViewer_MouseUp" MouseMove="canvas_mapViewer_MouseMove" MouseWheel="canvas_mapViewer_MouseWheel">
         </Canvas>
+
+        <Canvas Grid.Row="2" Grid.Column="1" Background="HotPink"/>
     </Grid>
 </Window>
