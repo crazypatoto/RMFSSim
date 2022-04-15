@@ -61,6 +61,7 @@
     <Compile Include="RMFS\Maps\MapNode.cs" />
     <Compile Include="RMFS\Pods\Pod.cs" />
     <Compile Include="RMFS\RMFSCore.cs" />
+    <Compile Include="RMFS\Visualizations\ArrowLineGeometryGenerator.cs" />
     <Compile Include="RMFS\Visualizations\RMFSVisualization.cs" />
     <Compile Include="Windows\NewMapWindow.xaml.cs">
       <DependentUpon>NewMapWindow.xaml</DependentUpon>
@@ -152,6 +153,23 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\alpha-s-box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\cursor-move.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\eye-plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\arrow-bottom-right.png" />
+    <Resource Include="Icons\arrow-top-left-bottom-right.png" />
+    <Resource Include="Icons\arrow-top-left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\alpha-n-box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\cancel.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

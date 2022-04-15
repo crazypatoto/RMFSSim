@@ -17,8 +17,7 @@ namespace RMFSSim.RMFS.Maps
             PickStation,
             ReplenishmentStation,
             ChargeStation,
-            Stroage,
-            Buffer,            
+            Stroage,         
         }
 
         /// <summary>
@@ -66,6 +65,11 @@ namespace RMFSSim.RMFS.Maps
         public override string ToString()
         {
             return this.Name;
+        }
+
+        public bool IsNeighbourNode(MapNode node)
+        {
+            return Math.Abs(this.Location.X - node.Location.X) + Math.Abs(this.Location.Y - node.Location.Y) == 1;
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace RMFSSim.RMFS.Maps
 {
     public class Map
-    {   
+    {
         /// <summary>
         /// File path of the map.
         /// </summary>
@@ -32,16 +32,15 @@ namespace RMFSSim.RMFS.Maps
         /// </summary>
         public MapNode[,] AllNodes { get; }
         /// <summary>
-        /// All edged of the map. (Toltal count = (2 * length - 1) * width)
+        /// All edges of the map. (Toltal count = (2 * length - 1) * width)
         /// </summary>
-        public MapEdge[,] AllEdges { get; }
-        
+        public MapEdge[,] AllEdges { get; }      
 
         public Map(int width, int length, string sn = null)
         {
             this.FilePath = null;
             this.Width = width;
-            this.Length = length;            
+            this.Length = length;
             if (sn == null)
             {
                 this.SerialNumber = Guid.NewGuid().ToString();
@@ -99,7 +98,7 @@ namespace RMFSSim.RMFS.Maps
 
         public void Save()
         {
-            if(this.FilePath != null)
+            if (this.FilePath != null)
             {
                 SaveToFile(this.FilePath);
             }
@@ -133,6 +132,23 @@ namespace RMFSSim.RMFS.Maps
         public MapEdge GetEdgeByNodes(MapNode n1, MapNode n2)
         {
             return this.AllEdges[n1.Location.Y + n2.Location.Y, (n1.Location.X + n2.Location.X) / 2];
+        }
+
+        public Tuple<int, int> CoordinatesOfEdge(MapEdge edge)
+        {
+            int w = this.AllEdges.GetLength(0); // width
+            int l = this.AllEdges.GetLength(1); // lenght
+
+            for (int y = 0; y < w; ++y)
+            {
+                for (int x = 0; x < l; ++x)
+                {
+                    if (this.AllEdges[y, x].Equals(edge))
+                        return Tuple.Create(x, y);
+                }
+            }
+
+            return Tuple.Create(-1, -1);
         }
 
         public List<MapNode> GetNeighborNodes(MapNode node)

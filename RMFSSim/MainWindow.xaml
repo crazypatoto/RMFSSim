@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RMFSSim"
+        xmlns:local="clr-namespace:RMFSSim.RMFS"
+        xmlns:maps="clr-namespace:RMFSSim.RMFS.Maps"
         mc:Ignorable="d"
-        Title="RMFS Simulator" Height="720" Width="1280" WindowStartupLocation="CenterOwner">
+        Title="RMFS Simulator" Height="900" Width="1600" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="MenuItem">
             <Setter Property="FontSize" Value="14"/>
@@ -14,6 +15,7 @@
     </Window.Resources>
     <Grid Background="#FFF0F0F0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -28,8 +30,8 @@
                 <MenuItem Header="New Map" Click="btn_newMap_Click"/>
                 <MenuItem Header="Open Map" Click="btn_openMap_Click"/>
                 <Separator/>
-                <MenuItem Header="Save Map" Click="btn_saveMap_Click"/>
-                <MenuItem Header="Save Map As" Click="btn_saveMapAs_Click"/>
+                <MenuItem Header="Save Map" x:Name="menuItem_saveMap" Click="btn_saveMap_Click" IsEnabled="False"/>
+                <MenuItem Header="Save Map As" x:Name="menuItem_saveMapAs" Click="btn_saveMapAs_Click" IsEnabled="False"/>
             </MenuItem>
             <MenuItem Header="Edit"/>
             <MenuItem Header="View"/>
@@ -40,6 +42,9 @@
 
         <ToolBarTray Grid.Row="1" Grid.ColumnSpan="2" Background="#FFF0F0F0">
             <ToolBarTray.Resources>
+                <Style TargetType="ToolBar">
+                    <Setter Property="Background" Value="#FFF0F0F0"></Setter>
+                </Style>
                 <Style TargetType="Image">
                    <Setter Property="Height" Value="20"></Setter>
                     <Style.Triggers>
@@ -56,44 +61,61 @@
                     </Style.Resources>
                 </Style>
             </ToolBarTray.Resources>
-            <ToolBar Band="0" BandIndex="0" Background="#FFF0F0F0">
+            <ToolBar Band="0" BandIndex="0">
                 <Button x:Name="btn_newMap" ToolTip="New Map" Click="btn_newMap_Click">
                     <Image Source="/Icons/file.png"/>
                 </Button>
                 <Button x:Name="btn_openMap" ToolTip="Open Existing Map" Click="btn_openMap_Click">
                     <Image Source="/Icons/folder-open.png"/>
                 </Button>
-                <Button x:Name="btn_saveMap" ToolTip="Save Current Map" Click="btn_saveMap_Click">
+                <Button x:Name="btn_saveMap" ToolTip="Save Current Map" Click="btn_saveMap_Click" IsEnabled="False">
                     <Image Source="/Icons/content-save.png"/>
                 </Button>
-                <Button x:Name="btn_saveMapAs" ToolTip="Save Current Map As" Click="btn_saveMapAs_Click">
+                <Button x:Name="btn_saveMapAs" ToolTip="Save Current Map As" Click="btn_saveMapAs_Click" IsEnabled="False">
                     <Image Source="/Icons/content-save-move.png"/>
                 </Button>
             </ToolBar>
-            <ToolBar Band="0" BandIndex="1" x:Name="toolbar_mapEdit" Background="#FFF0F0F0">
-                <Button x:Name="btn_addNone" ToolTip="Add None Node" Click="btn_addNone_Click">
+            <ToolBar Band="0" BandIndex="1" x:Name="toolbar_mapEdit" IsEnabled="False">
+                <Button x:Name="btn_viewDetail" ToolTip="View Details" Click="btn_viewDetail_Click">
+                    <Image Source="/Icons/eye-plus.png"/>
+                </Button>
+                <Button x:Name="btn_selectMode" ToolTip="Selection Tool" Click="btn_selectMode_Click">
                     <Image Source="/Icons/border-none-variant.png"/>
                 </Button>
-                <Button x:Name="btn_addStorage" ToolTip="Add Storage" Click="btn_addStorage_Click">
+                <Button x:Name="btn_addNone" ToolTip="Add None Node" Click="btn_addNone_Click">
+                    <Image Source="/Icons/alpha-n-box.png"/>
+                </Button>
+                <Button x:Name="btn_addStorage" ToolTip="Add Storage Node" Click="btn_addStorage_Click">
                     <Image Source="/Icons/alpha-s-box.png"/>
                 </Button>
-                <Button x:Name="btn_addPickStation" ToolTip="Add Pick Station" Click="btn_addPickStation_Click">
+                <Button x:Name="btn_addPickStation" ToolTip="Add Pick Station Node" Click="btn_addPickStation_Click">
                     <Image Source="/Icons/alpha-p-box.png"/>
                 </Button>
-                <Button x:Name="btn_addReplenishmentStation" ToolTip="Add Replenishment Station" Click="btn_addReplenishmentStation_Click">
+                <Button x:Name="btn_addReplenishmentStation" ToolTip="Add Replenishment Station Node" Click="btn_addReplenishmentStation_Click">
                     <Image Source="/Icons/alpha-r-box.png"/>
                 </Button>
-                <Button x:Name="btn_addChargeStation" ToolTip="Add Charge Station" Click="btn_addChargeStation_Click">
+                <Button x:Name="btn_addChargeStation" ToolTip="Add Charge Station Node" Click="btn_addChargeStation_Click">
                     <Image Source="/Icons/ev-station.png"/>
                 </Button>
+                <Button x:Name="btn_bidirection" ToolTip="Set Bi-direction" Click="btn_bidirection_Click">
+                    <Image Source="/Icons/arrow-top-left-bottom-right.png"/>
+                </Button>
+                <Button x:Name="btn_onedirection" ToolTip="Set Single Direction" Click="btn_onedirection_Click">
+                    <Image Source="/Icons/arrow-bottom-right.png"/>
+                </Button>
+                <Button x:Name="btn_nopassing" ToolTip="Set Single Direction" Click="btn_nopassing_Click" MouseDoubleClick="btn_nopassing_MouseDoubleClick">
+                    <Image Source="/Icons/cancel.png"/>
+                </Button>
+            </ToolBar>
+            <ToolBar Band="0" BandIndex="2" x:Name="toolbar_instanceControl" IsEnabled="False">
                 <Button x:Name="btn_addAGV" ToolTip="Add AGV" Click="btn_addAGV_Click">
                     <Image Source="/Icons/robot-mower.png"/>
                 </Button>
                 <Button x:Name="btn_addPod" ToolTip="Add Pod" Click="btn_addPod_Click">
                     <Image Source="/Icons/shipping-pallet.png"/>
                 </Button>
-            </ToolBar>
-            <ToolBar Band="0" BandIndex="3"  x:Name="toolbar_simulationControl" Background="#FFF0F0F0">
+            </ToolBar> 
+            <ToolBar Band="0" BandIndex="3"  x:Name="toolbar_simulationControl" IsEnabled="False">
                 <Button x:Name="btn_startSim" ToolTip="Start Simulation" Click="btn_startSim_Click" Style="{StaticResource RoundButtonStyle}">
                     <Image Source="/Icons/play.png"/>
                 </Button>
@@ -113,10 +135,54 @@
 
         </ToolBarTray>
 
-        <Canvas Grid.Row="2" Grid.Column="0" Panel.ZIndex="-1" x:Name="canvas_mapViewer" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                MouseDown="canvas_mapViewer_MouseDown" MouseUp="canvas_mapViewer_MouseUp" MouseMove="canvas_mapViewer_MouseMove" MouseWheel="canvas_mapViewer_MouseWheel">
+        <Canvas Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1" Grid.RowSpan="2" Panel.ZIndex="-1" x:Name="canvas_mapViewer" Background="White" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         </Canvas>
 
-        <Canvas Grid.Row="2" Grid.Column="1" Background="HotPink"/>
+        <DockPanel  Grid.Row="2" Grid.Column="1" Background="#FFF0F0F0">
+            <GroupBox  Header="Map Info.">
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontFamily" Value="Segoe UI"/>
+                        </Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="FontFamily" Value="Segoe UI"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="SN:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,5,5,5"></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Width:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,5,5,5"></TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Length:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,5,5,5"></TextBlock>
+                    <TextBox x:Name="tb_mapSN" IsReadOnly="True" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5,5,5,5"></TextBox>
+                    <TextBox x:Name="tb_mapWidth" IsReadOnly="True" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5,5,5,5"></TextBox>
+                    <TextBox x:Name="tb_mapLength" IsReadOnly="True" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="5,5,5,5"></TextBox>
+                </Grid>
+            </GroupBox>
+        </DockPanel>
+
+        <TreeView Grid.Row="3" Grid.Column="1" x:Name="treeview_infos">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type local:RMFSCore}" ItemsSource="{Binding CurrentMap}">
+                    <TextBlock Text="Map Info."></TextBlock>
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <DataTemplate DataType="{x:Type maps:Map}">
+                            <TreeViewItem Header="{Binding SerialNumber}">
+                            </TreeViewItem>
+                        </DataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+        
     </Grid>
 </Window>
